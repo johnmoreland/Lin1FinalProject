@@ -46,25 +46,29 @@ def invert_matrix(key):
     '''
     Inverts the input matrix
     '''
-    pass
+    return np.linalg.inv(key)
 
 def generate_key(dimension):
     '''
     Creates a square matrix with given dimensions
-    ''' 
+    '''
+    return np.random.randint(256, size=(dimension,dimension))
 
-def encipher(plaintext, key, dimension=2):
+def encipher(plaintext, dimension=2):
     '''
     Generates ciphertext from the given plaintext and corresponding key
     '''
-    pass
     #Create a key if needed,
+    key = generate_key(dimension)
+    print key
 
     #check if key is invertible
+    is_invertible(key)
 
     #map each letter to a number
-
-    #matrix moperation on the number
+    #string_to_matrix(plaintext, dimension)
+ 
+    #matrix operation on the number
 
 def decipher(ciphertext, key, dimension=2):
     '''
@@ -73,3 +77,4 @@ def decipher(ciphertext, key, dimension=2):
     pass
 
 print string_to_matrix("jeremy is lame!", 2)
+encipher('abcdef')
