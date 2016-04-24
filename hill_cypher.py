@@ -89,14 +89,8 @@ def encipher(plaintext, dimension=2):
     print ciphertext, key
     return ciphertext, key
 
-
-
-
 def decipher(ciphertext, dimension=2):
     '''
     Deciphers into plaintext
     '''
     pass
-
-generate_key(3)
-encipher('jeremy is awesome')
