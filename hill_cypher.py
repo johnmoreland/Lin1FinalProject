@@ -47,6 +47,7 @@ def matrix_to_string(matrix, dimension):
             ASCII_list.append(element[d])
 
     # Convert list of ASCII values to characters
+    print 'ASCII LIST:', ASCII_list
     plain_characters = [chr(character) for character in ASCII_list]
     
     # Combine list into comprehensible string
@@ -58,7 +59,13 @@ def invert_matrix(key):
     '''
     Inverts the input matrix
     '''
-    return np.linalg.inv(key)
+    #Scale so everything is an int
+    inverse = np.linalg.inv(key) * np.linalg.det(key)
+
+    #Mod each element 
+    for element in np.nditer(inverse, op_flags=['readwrite']):
+        element[...] = int(element % 128)
+    return inverse
 
 def generate_key(dimension):
     '''
@@ -82,15 +89,34 @@ def encipher(plaintext, dimension=2):
     
     #matrix operation on the number
     encoded_array = np.dot(key, character_array)
-    modded_array = np.mod(encoded_array,128)
+    modded_array = np.mod(encoded_array, 128)
 
     #convert matrix to ciphertext
-    ciphertext = matrix_to_string(modded_array,dimension)
-    print ciphertext, key
+    ciphertext = matrix_to_string(modded_array, dimension)
     return ciphertext, key
 
-def decipher(ciphertext, dimension=2):
+def decipher(ciphertext, key, dimension=2):
     '''
     Deciphers into plaintext
     '''
-    pass
+    #invert the key
+    decipher_key = invert_matrix(key)
+
+    #convert ciphertext to character array
+    ciphertext_array = string_to_matrix(ciphertext, dimension)
+
+    #matrix operation on array
+    decoded_array = np.dot(decipher_key, ciphertext_array)
+    modded_array = np.mod(decoded_array,128)
+    print 'old', modded_array
+    new = modded_array.astype(int)
+    print 'new', new
+    #convert new character array back to string
+    plaintext = matrix_to_string(new, dimension)
+    return plaintext
+
+ciphertext, key = encipher('jeremy is awesome')
+# print invert_matrix(key)
+print ciphertext
+print decipher(ciphertext,key)
+
