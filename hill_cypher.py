@@ -25,8 +25,8 @@ def string_to_matrix(plaintext, dimension):
     ASCII_list = [ord(char) for char in plaintext]
     
     # Fill in empty elements
-    if len(ASCII_list) % dimension:
-        for i in range(len(ASCII_list) % dimension):
+    if (len(ASCII_list) % dimension):
+        for i in range(dimension - (len(ASCII_list) % dimension)):
             ASCII_list.append(32)
 
     # Convert list into matrix with given dimension
@@ -34,13 +34,26 @@ def string_to_matrix(plaintext, dimension):
     size = (len(ASCII_list) / dimension), dimension  #height, width
     return np.reshape(ASCII_array, size).T
 
-
-
 def matrix_to_string(matrix, dimension):
     '''
-    converts a matrix to a string
+    Converts an input matrix to a string of characters
     '''
-    pass
+    # Initizialize a list of ASCII values
+    ASCII_list = []
+
+    # Convert matrix into a list / Operate over each element in each row
+    for element in matrix.T.tolist():
+        for d in range(dimension):
+            ASCII_list.append(element[d])
+
+    # Convert list of ASCII values to characters
+    plain_characters = [chr(character) for character in ASCII_list]
+    
+    # Combine list into comprehensible string
+    plaintext = ''.join(plain_characters)
+    
+    return plaintext
+
 
 def invert_matrix(key):
     '''
@@ -76,5 +89,3 @@ def decipher(ciphertext, key, dimension=2):
     '''
     pass
 
-print string_to_matrix("jeremy is lame!", 2)
-encipher('abcdef')
