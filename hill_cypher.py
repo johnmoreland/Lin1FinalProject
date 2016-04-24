@@ -54,7 +54,6 @@ def matrix_to_string(matrix, dimension):
     
     return plaintext
 
-
 def invert_matrix(key):
     '''
     Inverts the input matrix
@@ -73,15 +72,19 @@ def encipher(plaintext, dimension=2):
     '''
     #Create a key if needed,
     key = generate_key(dimension)
-    print key
-
-    #check if key is invertible
-    is_invertible(key)
 
     #map each letter to a number
-    #string_to_matrix(plaintext, dimension)
- 
+    character_array = string_to_matrix(plaintext, dimension)
+
     #matrix operation on the number
+    encoded_array = np.dot(key, character_array)
+
+    #convert matrix to ciphertext
+    ciphertext = matrix_to_string(encoded_array)
+
+    return ciphertext, key
+
+
 
 def decipher(ciphertext, key, dimension=2):
     '''
