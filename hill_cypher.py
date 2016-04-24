@@ -82,10 +82,11 @@ def encipher(plaintext, dimension=2):
     
     #matrix operation on the number
     encoded_array = np.dot(key, character_array)
+    modded_array = np.mod(encoded_array,128)
 
     #convert matrix to ciphertext
-    ciphertext = matrix_to_string(encoded_array)
-
+    ciphertext = matrix_to_string(modded_array,dimension)
+    print ciphertext, key
     return ciphertext, key
 
 
@@ -98,3 +99,4 @@ def decipher(ciphertext, dimension=2):
     pass
 
 generate_key(3)
+encipher('jeremy is awesome')
