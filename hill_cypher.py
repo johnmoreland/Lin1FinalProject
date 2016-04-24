@@ -64,7 +64,11 @@ def generate_key(dimension):
     '''
     Creates a square matrix with given dimensions
     '''
-    return np.random.randint(256, size=(dimension,dimension))
+    key = np.random.randint(256, size=(dimension,dimension))
+    if is_invertible(key):
+    	return key
+    #if not invertible, generate a new key
+    return generate_key(dimension)
 
 def encipher(plaintext, dimension=2):
     '''
@@ -75,7 +79,7 @@ def encipher(plaintext, dimension=2):
 
     #map each letter to a number
     character_array = string_to_matrix(plaintext, dimension)
-
+    
     #matrix operation on the number
     encoded_array = np.dot(key, character_array)
 
@@ -86,9 +90,11 @@ def encipher(plaintext, dimension=2):
 
 
 
-def decipher(ciphertext, key, dimension=2):
+
+def decipher(ciphertext, dimension=2):
     '''
     Deciphers into plaintext
     '''
     pass
 
+generate_key(3)
