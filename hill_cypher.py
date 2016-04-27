@@ -58,7 +58,9 @@ def invert_matrix(matrix):
     '''
     Inverts the input matrix
     '''
-    matrix = (np.linalg.inv(matrix)) 
+    matrix = (np.linalg.inv(matrix))
+    det = -np.linalg.det(matrix) 
+    matrix = np.multiply(matrix,det) 
     return matrix
 
 def generate_key(dimension):
@@ -67,6 +69,7 @@ def generate_key(dimension):
     '''
     # key = np.random.randint(256, size=(dimension,dimension))
     # if is_invertible(key):
+    # 	key = np.mod(key,128)
     # 	return key
     # #if not invertible, generate a new key
     # return generate_key(dimension)
@@ -74,7 +77,7 @@ def generate_key(dimension):
     if dimension == 2:
     	key = np.array([[1, 2],[2, 3]])
     elif dimension ==3:
-    	key = np.array([[1, 2, 3],[2, 3, 4],[4, 5, 6]])
+    	key = np.array([[1, 2, 3],[2, 3, 4],[7, 5, 6]])
     return key
 
 def encipher(plaintext, dimension=2):
@@ -108,19 +111,14 @@ def decipher(ciphertext, key, dimension=2):
     #matrix operation on array
     decoded_array = np.dot(decipher_key, ciphertext_array)
     modded_array = np.mod(decoded_array,128)
-    new = modded_array.astype(int)
-
+    rounded_array = np.rint(modded_array)
+    new = rounded_array.astype(int)
     #convert new character array back to string
     plaintext = matrix_to_string(new, dimension)
     return plaintext
 
-#ciphertext, key = encipher('jeremy is awesome')
-
-test = string_to_matrix('testing',3)
-print matrix_to_string(test,3)
-
-ciphertext, key = encipher('jeremy is awesome')
+ciphertext, key = encipher('jeremy is awesome',2)
 print 'ciphertext:',ciphertext
 print key
 print invert_matrix(key)
-print 'deciphered:',decipher(ciphertext,key)
+print 'deciphered:',decipher(ciphertext,key,2)
