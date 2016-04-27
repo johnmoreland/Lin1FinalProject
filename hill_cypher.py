@@ -59,10 +59,10 @@ def invert_matrix(matrix):
     Inverts the input matrix
     '''
     matrix = (np.linalg.inv(matrix))
-    det = -1/np.linalg.det(matrix)
-    matrix = np.multiply(matrix,det)
-    matrix = matrix.astype(int)
-    matrix = np.mod(matrix,128)
+    # det = -1/np.linalg.det(matrix)
+    # matrix = np.multiply(matrix,det)
+    # matrix = matrix.astype(int)
+    # matrix = np.mod(matrix,128)
     return matrix
 
 def generate_key(dimension):
@@ -79,7 +79,7 @@ def generate_key(dimension):
     if dimension == 2:
     	key = np.array([[1, 2],[2, 3]])
     elif dimension ==3:
-    	key = np.array([[7,2,1],[0,3,-1],[3,4,-2]])
+    	key = np.array([[7,2,1],[0,3,-1],[-3,4,-2]])
     return key
 
 def encipher(plaintext, dimension=2):
