@@ -88,13 +88,6 @@ def generate_key(dimension):
     #if not invertible or if not modular, generate a new key
     return generate_key(dimension)
 
-    # if dimension == 2:
-    # 	key = np.array([[1, 2],[2, 3]])
-    # elif dimension ==3:
-    # 	#key = np.array([[7,2,1],[0,3,-1],[-3,4,-2]])
-    # 	key = np.array([[0,11,15],[7,0,1],[4,19,0]])
-    # return key
-
 def encipher(plaintext, dimension=2):
     '''
     Generates ciphertext from the given plaintext and corresponding key
@@ -133,8 +126,8 @@ def decipher(ciphertext, key, dimension=2):
     plaintext = matrix_to_string(new, dimension)
     return plaintext
 
-ciphertext, key = encipher('jeremy is the greatest at hill ciphers',4)
+ciphertext, key = encipher('jeremy is the greatest at hill ciphers',3)
 print 'ciphertext:',ciphertext
 print key
 print invert_matrix(key)
-print 'deciphered:',decipher(ciphertext,key,4)
+print 'deciphered:',decipher(ciphertext,key,3)
