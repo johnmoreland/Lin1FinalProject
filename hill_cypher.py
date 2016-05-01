@@ -5,7 +5,7 @@ Code that encodes and deciphers hill ciphers
 
 import math
 import numpy as np
-import mod_inverse
+from mod_inverse import modinv
 
 #chr and ord are our friends
 
@@ -17,6 +17,12 @@ def is_invertible(matrix):
     # Checks if determinant is nonzero
     determinant = np.linalg.det(matrix)
     return bool(determinant)
+
+def is_modular(matrix):
+    det = np.linalg.det(matrix)
+    det_mod = int(round(det % 128))
+    test = modinv(det_mod,128)
+    return bool(test)
 
 def string_to_matrix(plaintext, dimension):
     '''
@@ -74,19 +80,13 @@ def generate_key(dimension):
     '''
     Creates a square matrix with given dimensions
     '''
-    # key = np.random.randint(256, size=(dimension,dimension))
-    # if is_invertible(key):
-    # 	key = np.mod(key,128)
-    # 	return key
-    # #if not invertible, generate a new key
-    # return generate_key(dimension)
+    key = np.random.randint(256, size=(dimension,dimension))
 
-    if dimension == 2:
-    	key = np.array([[1, 2],[2, 3]])
-    elif dimension ==3:
-    	#key = np.array([[7,2,1],[0,3,-1],[-3,4,-2]])
-    	key = np.array([[0,11,15],[7,0,1],[4,19,0]])
+    if is_modular(key) and is_invertible(key):
+        key = np.mod(key,128)
         return key
+    #if not invertible or if not modular, generate a new key
+    return generate_key(dimension)
 
 def encipher(plaintext, dimension=2):
     '''
@@ -126,7 +126,11 @@ def decipher(ciphertext, key, dimension=2):
     plaintext = matrix_to_string(new, dimension)
     return plaintext
 
+<<<<<<< HEAD
 ciphertext, key = encipher('jeremy is awesome',2)
+=======
+ciphertext, key = encipher('jeremy is the greatest at hill ciphers',3)
+>>>>>>> acc7f5f60687cb800d77983635bde90c8993f127
 print 'ciphertext:',ciphertext
 print key
 print invert_matrix(key)
