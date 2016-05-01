@@ -126,11 +126,8 @@ def decipher(ciphertext, key, dimension=2):
     plaintext = matrix_to_string(new, dimension)
     return plaintext
 
-<<<<<<< HEAD
 ciphertext, key = encipher('jeremy is awesome',2)
-=======
-ciphertext, key = encipher('jeremy is the greatest at hill ciphers',3)
->>>>>>> acc7f5f60687cb800d77983635bde90c8993f127
+
 print 'ciphertext:',ciphertext
 print key
 print invert_matrix(key)
