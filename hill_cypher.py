@@ -126,8 +126,9 @@ def decipher(ciphertext, key, dimension=2):
     plaintext = matrix_to_string(new, dimension)
     return plaintext
 
-ciphertext, key = encipher('jeremy is the greatest at hill ciphers',3)
-print 'ciphertext:',ciphertext
-print key
-print invert_matrix(key)
-print 'deciphered:',decipher(ciphertext,key,3)
+if __name__ == "__main__":
+	ciphertext, key = encipher('the the the testing 123',2)
+	print 'ciphertext:',ciphertext
+	print key
+	print invert_matrix(key)
+	print 'deciphered:',decipher(ciphertext,key,2)
