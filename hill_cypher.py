@@ -1,5 +1,5 @@
 """
-Code that encodes and deciphers hill ciphers
+This program encodes and deciphers hill ciphers
 @authors: John Moreland and Jeremy Garcia
 """
 
@@ -7,11 +7,9 @@ import math
 import numpy as np
 from mod_inverse import modinv
 
-#chr and ord are our friends
-
 def is_invertible(matrix):
     '''
-    Verifies that the given matrix is is_invertible
+    Verifies that the given matrix is invertible
     Output: Boolean
     '''
     # Checks if determinant is nonzero
@@ -19,6 +17,10 @@ def is_invertible(matrix):
     return bool(determinant)
 
 def is_modular(matrix):
+    '''
+    Verifies that the given matrix has a modular inverse
+    Output: Boolean
+    '''
     det = np.linalg.det(matrix)
     det_mod = int(round(det % 128))
     test = modinv(det_mod,128)
@@ -53,12 +55,9 @@ def matrix_to_string(matrix, dimension):
         for d in range(dimension):
             ASCII_list.append(element[d])
 
-    # Convert list of ASCII values to characters
-    plain_characters = [chr(character) for character in ASCII_list]
-
-    # Combine list into comprehensible string
-    plaintext = ''.join(plain_characters)
-
+    # Convert list of ASCII values to characters and combine list into comprehensible string
+    plain_characters = [chr(character) for character in ASCII_list
+    plaintext = ''.join(plain_characters
     return plaintext
 
 def invert_matrix(matrix):
@@ -80,19 +79,19 @@ def generate_key(dimension):
     '''
     Creates a square matrix with given dimensions
     '''
-    key = np.random.randint(256, size=(dimension,dimension))
-
+    key = np.random.randint(256, size=(dimension,dimension
+    #If the random key is both invertible and has a modular inverse,
+    #then we can use it. Otherwise, try again.
     if is_modular(key) and is_invertible(key):
         key = np.mod(key,128)
         return key
-    #if not invertible or if not modular, generate a new key
-    return generate_key(dimension)
+    else:
+        return generate_key(dimension)
 
 def encipher(plaintext, dimension=2):
     '''
     Generates ciphertext from the given plaintext and corresponding key
     '''
-    #Create a key
     key = generate_key(dimension)
 
     #map each letter to a number
